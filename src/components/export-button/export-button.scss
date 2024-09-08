@@ -1,0 +1,18 @@
+.export-button {
+    position: absolute;
+    border: none;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: #28df99;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: box-shadow 0.1s ease;
+}
+
+.export-button:hover {
+    box-shadow: 0 0 4px 4px #ffffff3c;
+    transition: box-shadow 0.1s ease;
+}

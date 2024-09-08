@@ -1,0 +1,13 @@
+button.add-section-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(345deg,#2adf9a,#2de1a2 21%,#36e2a9 30%,#3fe4b2 39%,#48e5b8 46%,#51e6c1 54%,#5ae7c6 61%,#64e8cb 69%,#6de9d2 79%,#76ead6);
+    text-shadow: 1px 1px 4px rgba(64,64,64,.251);
+    color: #fff;
+    width: 60%;
+    min-height: 40px;
+    font-size: 16px;
+}

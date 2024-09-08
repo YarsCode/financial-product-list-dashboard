@@ -1,0 +1,56 @@
+@use '../base/vars' as *;
+
+@font-face {
+    font-family: "FbCoherentiSans-Regular";
+    src: url("../../assets/fonts/FbCoherentiSans/FbCoherentiSans-Regular.otf");
+}
+@font-face {
+    font-family: "FbCoherentiSans-Medium";
+    src: url("../../assets/fonts/FbCoherentiSans/FbCoherentiSans-Medium.otf");
+}
+@font-face {
+    font-family: "FbCoherentiSans-Bold";
+    src: url("../../assets/fonts/FbCoherentiSans/FbCoherentiSans-Bold.otf");
+}
+
+* {
+    box-sizing: border-box;
+    font-weight: 400;
+    font-family: "FbCoherentiSans-Regular", sans-serif;
+}
+
+#root {
+    height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    direction: rtl;
+}
+
+button {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p {
+    margin: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}

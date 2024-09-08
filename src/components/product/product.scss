@@ -1,0 +1,89 @@
+li.product {
+    background: #212121;
+    border: 1px solid #28df99;    
+    width: 100%;
+    min-height: 76px;
+    height: 76px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 0px 8px 1px inset rgba(40, 223, 153, 0.4);
+    transition: min-height 0.2s ease;
+
+    > p {
+        text-align: center;
+    }
+
+    .product__name {
+        margin-top: 0;
+        font-weight: bold;
+        padding: 6px 24px;
+        transition: margin-top 0.2 ease;
+        // border-bottom: 1px solid #28df99;
+        // box-shadow: 0 4px 2px -1px rgba(40, 223, 153, .188);
+    }
+
+    // .product__price {
+    //     // background: linear-gradient(345deg, #2adf9a, #2de1a2 21%, #36e2a9 30%, #3fe4b2 39%, #48e5b8 46%, #51e6c1 54%, #5ae7c6 61%, #64e8cb 69%, #6de9d2 79%, #76ead6);
+    //     margin-bottom: 6px;
+    //     padding: 4px;
+    //     width: 50%;
+    //     text-shadow: 1px 1px 4px rgba(64,64,64,.251);
+    //     border-radius: 4px;
+    //     font-size: 18px;
+    // }
+
+    .product__desc {
+        padding: 0 24px;
+        height: 0;
+        display: none;
+        overflow: hidden;
+        font-size: 14px;
+    }
+
+    .product__desc--expanded {
+        height: auto;
+        overflow: visible;
+        display: flex;
+        align-items: center;
+        margin: 6px auto 16px;
+    }
+
+    .product__show-desc-btn {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        width: 24px;
+        height: 22px;
+        bottom: 0;
+        left: 0;
+        background: #28df99;
+        border-bottom-left-radius: 4px;
+        border-top-right-radius: 6px;
+        padding: 2px;
+    }
+
+    .product__show-desc-btn:hover {
+        box-shadow: 0 0 4px 4px #ffffff3c;
+        transition: box-shadow 0.1s ease;
+    }
+}
+
+li.product--drag-overlay {
+    @extend .product;
+    opacity: 0.6;
+    border: 1px solid #fff;
+    background: #e6e6e6;
+    box-shadow: 0 0 10px 2px #fff;
+}
+
+@media screen and (max-width: 550px) {
+    .product__name {
+        font-size: 12px;
+    }
+}

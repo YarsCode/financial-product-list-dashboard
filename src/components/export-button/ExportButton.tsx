@@ -29,7 +29,7 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
     };
 
     const exportToDocx = () => {
-        loadFile("/planningTemplate.docx", function (error, content) {
+        loadFile(`${import.meta.env.BASE_URL}planningTemplate.docx`, function (error, content) {
             if (error) {
                 throw error;
             }

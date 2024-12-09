@@ -29,7 +29,7 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
     };
 
     const exportToDocx = () => {
-        loadFile("public/planningTemplate.docx", function (error, content) {
+        loadFile("/planningTemplate.docx", function (error, content) {
             if (error) {
                 throw error;
             }

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { ContainerType, ProductType } from "../../types";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { ContainerType, DataObj, ProductType } from "../../types";
 import ProductList from "../product-list/ProductList.tsx";
 import refreshIcon from "../../assets/refreshIcon.svg";
 import {
@@ -20,6 +20,8 @@ import { turnDataIntoObject } from "../../utils/productList.ts";
 import Loader from "../loader/Loader.tsx";
 import ExportButton from "../export-button/ExportButton.tsx";
 import { addCommasToNumber } from "../../utils/numberManipulations.ts";
+import { calculateInputWidthByContent } from "../../utils/calculateInputWidthByContent.ts";
+import { setDashboardData } from "../../utils/setDashboardData.ts";
 // import productList from "../../utils/productList.ts";
 
 const { allProductsContainer, chosenProductsContainer } = allContainers;
@@ -32,12 +34,27 @@ const defaultChosenProductsContainer: ContainerType[] = chosenProductsContainer;
 function ProductListDashboard() {
     // const [defaultProducts, setDefaultProducts] = useState<ProductType[]>([]);
     const [allProductsContainer, setAllProductsContainer] = useState<ContainerType[]>(defaultAllProductsContainer);
-    const [hasClickedResetBtn, setHasClickedResetBtn] = useState(false);
     const [chosenProductsContainer] = useState<ContainerType[]>(defaultChosenProductsContainer);
+    const [hasClickedResetBtn, setHasClickedResetBtn] = useState(false);
+    const [customerName, setCustomerName] = useState("שם הלקוח");
+    // const [customerPhone, setCustomerPhone] = useState(Date.now().toString());
     const [products, setProducts] = useState<ProductType[]>([]);
-    const [step1Sum, setStep1Sum] = useState(0);
-    const [step2Sum, setStep2Sum] = useState(0);
-    const [totalSum, setTotalSum] = useState(step1Sum + step2Sum);
+    const [step1Total, setStep1Total] = useState(0);
+    const [step2Total, setStep2Total] = useState(0);
+    const [totalSum, setTotalSum] = useState(step1Total + step2Total);
+    const [dataObj, setDataObj] = useState<DataObj>({
+        customerName: '',
+        customerPhone: '',
+        currentDate: '',
+        planningStep1: [],
+        step1Total: 0,
+        planningStep2: [],
+        step2Total: 0,
+        totalSum: 0,
+      });
+    const [inputWidth, setInputWidth] = useState("114px");
+    const customerNameRef = useRef<HTMLInputElement>(null);
+    // const [dashboardData, setDashboardData] = useState({})
     const allProductsContainerId = useMemo(
         () => allProductsContainer.map((container) => container.id),
         [allProductsContainer]
@@ -47,7 +64,6 @@ function ProductListDashboard() {
         [chosenProductsContainer]
     );
 
-
     const [activeContainer, setActiveContainer] = useState<ContainerType | null>(null);
 
     const [activeProduct, setActiveProduct] = useState<ProductType | null>(null);
@@ -55,7 +71,7 @@ function ProductListDashboard() {
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                distance: 10,
+                distance: 2,
             },
         })
     );
@@ -77,8 +93,18 @@ function ProductListDashboard() {
     }, [hasClickedResetBtn]);
 
     useEffect(() => {
-        setTotalSum(step1Sum + step2Sum);
-    }, [step1Sum, step2Sum]);
+        setTotalSum(step1Total + step2Total);
+    }, [step1Total, step2Total]);
+
+    useEffect(() => {
+        calculateInputWidthByContent(customerNameRef, setInputWidth);
+    }, [customerName]);
+
+    useMemo(() => {
+        // setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, totalSum));
+        setDataObj(setDashboardData(customerName, products, step1Total, step2Total, totalSum)); //! without the phone's state. should also add to the brackets [] below.
+        
+    }, [customerName, products, step1Total, step2Total, totalSum]);
 
     //! console.log('products', products); // Check why this renders twice
 
@@ -88,14 +114,59 @@ function ProductListDashboard() {
         );
     }
 
+    const handleCustomerNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        setCustomerName(e.target.value);
+    };
+
+    // const handleCustomerPhoneChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    //     const value = e.target.value;
+    //     const regex = /^\+?[0-9]*$/;
+
+    //     if (regex.test(value)) {
+    //         setCustomerPhone(value);
+    //     }
+    // };
+
+    // const handlePhoneInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    //     const key = e.key;
+
+    //     // Allow control keys such as Backspace, Delete, Tab, etc.
+    //     if (
+    //         key === "Backspace" ||
+    //         key === "Delete" ||
+    //         key === "ArrowLeft" ||
+    //         key === "ArrowRight" ||
+    //         key === "Tab" ||
+    //         e.ctrlKey ||
+    //         e.altKey ||
+    //         e.metaKey || // Meta key is the "Command" key on macOS
+    //         e.shiftKey
+    //     ) {
+    //         return;
+    //     }
+
+    //     // Get current value of the input
+    //     const value = e.currentTarget.value;
+
+    //     // Only allow '+' as the first character
+    //     if (key === "+" && value.length === 0) {
+    //         return;
+    //     }
+
+    //     // Prevent any non-numeric keys (except '+' as the first character)
+    //     if (!/^[0-9]$/.test(key)) {
+    //         e.preventDefault();
+    //     }
+    // };
+
     const renderContainers = (container: ContainerType) => {
         return (
             <ProductList
                 key={container.id}
                 container={container}
                 products={products.filter((product) => product.container === container.id)}
-                setStep1Sum={setStep1Sum}
-                setStep2Sum={setStep2Sum}
+                setStep1Total={setStep1Total}
+                setStep2Total={setStep2Total}
                 className={`product-list-container${
                     container.id !== "allProductsContainer" ? " chosen-products-container" : ""
                 }`}
@@ -124,13 +195,13 @@ function ProductListDashboard() {
 
         const activeId = active.id;
         const overId = over.id;
-        console.log("Just dragged: ", event.active.data.current?.product);
+        // console.log("Just dragged: ", event.active.data.current?.product);
         if (activeId === overId) return;
 
         const isActiveAContainer = active.data.current?.type === "Container";
         if (!isActiveAContainer) return;
 
-        console.log("DRAG END");
+        // console.log("DRAG END");
 
         setAllProductsContainer((allProductsContainer) => {
             const activeContainerIndex = allProductsContainer.findIndex((container) => container.id === activeId);
@@ -197,7 +268,30 @@ function ProductListDashboard() {
                         {allProductsContainer.map((container) => renderContainers(container))}
                     </SortableContext>
                     <div className="chosen-products-title-wrapper">
-                        <h2>תהליך תכנון פיננסי</h2>
+                        <h2>
+                            תהליך תכנון פיננסי -
+                            <input
+                                type="text"
+                                onChange={handleCustomerNameChange}
+                                ref={customerNameRef}
+                                className="customer-name"
+                                autoFocus
+                                placeholder="שם הלקוח"
+                                style={{ width: inputWidth }}
+                            />
+                        </h2>
+
+                        {/* <label htmlFor="phone"></label>
+                        <input
+                            type="tel"
+                            id="customer-phone"
+                            name="phone"
+                            placeholder="טלפון"
+                            onChange={handleCustomerPhoneChange}
+                            onKeyDown={handlePhoneInputKeyDown}
+                            required
+                        /> */}
+
                         <div className="chosen-products-container">
                             <div className="chosen-products-wrapper">
                                 <SortableContext items={chosenProductsContainerId}>
@@ -209,7 +303,7 @@ function ProductListDashboard() {
                             </div>
                         </div>
                     </div>
-                    <ExportButton />
+                    <ExportButton dataObj={dataObj} />
                 </div>
 
                 {createPortal(
@@ -218,8 +312,8 @@ function ProductListDashboard() {
                             <ProductList
                                 key={activeContainer.id}
                                 container={activeContainer}
-                                setStep1Sum={setStep1Sum}
-                                setStep2Sum={setStep2Sum}
+                                setStep1Total={setStep1Total}
+                                setStep2Total={setStep2Total}
                                 products={products.filter((product) => product.container === activeContainer.id)}
                             />
                         )}

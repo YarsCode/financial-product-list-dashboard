@@ -11,7 +11,7 @@ main.product-lists-main {
     background-image: linear-gradient(280deg, #212121, #2e2e2e 30%, #2e2e2e 35%, #1c1c1c 99%);
     max-width: 100%;
     margin: auto;
-    padding-left: 16px;
+    // padding-left: 16px;
     border: 2px solid #28df99;
     border-radius: 12px;
     position: relative;
@@ -29,9 +29,48 @@ main.product-lists-main {
         font-weight: bold;
         margin: 16px auto 8px;
         width: fit-content;
+        margin-bottom: 16px;
         padding-bottom: 4px;
         border-bottom: 1px solid #28df99;
         box-shadow: 0 4px 2px -1px rgba(40, 223, 153, .188);
+    }
+
+    input.customer-name {
+        border: none;
+        outline: none;
+        background: none;
+        color: white;
+        margin-right: 4px;
+        font-size: 22px;
+        min-width: 114px;
+        font-weight: bold;
+        padding-bottom: 4px;
+
+        &:focus {
+            background: #dcdcdc;
+            color: black;
+        }
+    }
+}
+
+input#customer-phone {
+    direction: rtl;
+    border: none;
+    border: 1px solid #28df99;
+    border-radius: 6px;
+    // box-shadow: 0 4px 2px -1px rgba(40, 223, 153, 0.188);
+    outline: none;
+    margin: auto;
+    padding: 6px;
+    font-size: 22px;
+    color: white;
+    max-width: 150px;
+    background: none;
+    text-align: center;
+    
+    &:focus {
+        background: #dcdcdc;
+        color: black;
     }
 }
 

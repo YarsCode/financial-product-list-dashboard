@@ -9,16 +9,16 @@ import { addCommasToNumber } from "../../utils/numberManipulations.ts";
 interface Props {
     container: ContainerType;
     products: ProductType[];
-    setStep1Sum: React.Dispatch<React.SetStateAction<number>>;
-    setStep2Sum: React.Dispatch<React.SetStateAction<number>>;
+    setStep1Total: React.Dispatch<React.SetStateAction<number>>;
+    setStep2Total: React.Dispatch<React.SetStateAction<number>>;
     className?: string;
 }
 
 function ProductList({
     container,
     products,
-    setStep1Sum,
-    setStep2Sum,
+    setStep1Total,
+    setStep2Total,
     className,
 }: Props) {
     const [productsSum, setProductsSum] = useState(0);
@@ -34,11 +34,11 @@ function ProductList({
 
     useEffect(() => {
         if (container.id === "chosenProductsContainer_step1") {
-            setStep1Sum(productsSum);
+            setStep1Total(productsSum);
         }
 
         if (container.id === "chosenProductsContainer_step2") {
-            setStep2Sum(productsSum);
+            setStep2Total(productsSum);
         }
     }, [productsSum]);
 

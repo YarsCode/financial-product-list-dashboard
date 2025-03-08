@@ -37,7 +37,7 @@ function ProductListDashboard() {
     const [chosenProductsContainer] = useState<ContainerType[]>(defaultChosenProductsContainer);
     const [hasClickedResetBtn, setHasClickedResetBtn] = useState(false);
     const [customerName, setCustomerName] = useState("שם הלקוח");
-    // const [customerPhone, setCustomerPhone] = useState(Date.now().toString());
+    const [customerPhone, setCustomerPhone] = useState("ID-" + Date.now().toString());
     const [products, setProducts] = useState<ProductType[]>([]);
     const [step1Total, setStep1Total] = useState(0);
     const [step2Total, setStep2Total] = useState(0);
@@ -101,10 +101,9 @@ function ProductListDashboard() {
     }, [customerName]);
 
     useMemo(() => {
-        // setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, totalSum));
-        setDataObj(setDashboardData(customerName, products, step1Total, step2Total, totalSum)); //! without the phone's state. should also add to the brackets [] below.
+        setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, totalSum));
         
-    }, [customerName, products, step1Total, step2Total, totalSum]);
+    }, [customerName, customerPhone, products, step1Total, step2Total, totalSum]);
 
     //! console.log('products', products); // Check why this renders twice
 
@@ -118,46 +117,51 @@ function ProductListDashboard() {
         setCustomerName(e.target.value);
     };
 
-    // const handleCustomerPhoneChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    //     const value = e.target.value;
-    //     const regex = /^\+?[0-9]*$/;
+    const handleCustomerPhoneChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value;
+        const regex = /^\+?[0-9]*$/;
+        const initValue = "ID-" + Date.now().toString();
+        
+        if (!value.length) { //TODO: set timestamp if value is empty
+            setCustomerPhone(initValue);
+        }
 
-    //     if (regex.test(value)) {
-    //         setCustomerPhone(value);
-    //     }
-    // };
+        if (value && regex.test(value)) {
+            setCustomerPhone(value);
+        }
+    };
 
-    // const handlePhoneInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    //     const key = e.key;
+    const handlePhoneInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const key = e.key;
 
-    //     // Allow control keys such as Backspace, Delete, Tab, etc.
-    //     if (
-    //         key === "Backspace" ||
-    //         key === "Delete" ||
-    //         key === "ArrowLeft" ||
-    //         key === "ArrowRight" ||
-    //         key === "Tab" ||
-    //         e.ctrlKey ||
-    //         e.altKey ||
-    //         e.metaKey || // Meta key is the "Command" key on macOS
-    //         e.shiftKey
-    //     ) {
-    //         return;
-    //     }
+        // Allow control keys such as Backspace, Delete, Tab, etc.
+        if (
+            key === "Backspace" ||
+            key === "Delete" ||
+            key === "ArrowLeft" ||
+            key === "ArrowRight" ||
+            key === "Tab" ||
+            e.ctrlKey ||
+            e.altKey ||
+            e.metaKey || // Meta key is the "Command" key on macOS
+            e.shiftKey
+        ) {
+            return;
+        }
 
-    //     // Get current value of the input
-    //     const value = e.currentTarget.value;
+        // Get current value of the input
+        const value = e.currentTarget.value;
 
-    //     // Only allow '+' as the first character
-    //     if (key === "+" && value.length === 0) {
-    //         return;
-    //     }
+        // Only allow '+' as the first character
+        if (key === "+" && value.length === 0) {
+            return;
+        }
 
-    //     // Prevent any non-numeric keys (except '+' as the first character)
-    //     if (!/^[0-9]$/.test(key)) {
-    //         e.preventDefault();
-    //     }
-    // };
+        // Prevent any non-numeric keys (except '+' as the first character)
+        if (!/^[0-9]$/.test(key)) {
+            e.preventDefault();
+        }
+    };
 
     const renderContainers = (container: ContainerType) => {
         return (
@@ -281,7 +285,7 @@ function ProductListDashboard() {
                             />
                         </h2>
 
-                        {/* <label htmlFor="phone"></label>
+                        <label htmlFor="phone"></label>
                         <input
                             type="tel"
                             id="customer-phone"
@@ -290,7 +294,7 @@ function ProductListDashboard() {
                             onChange={handleCustomerPhoneChange}
                             onKeyDown={handlePhoneInputKeyDown}
                             required
-                        /> */}
+                        />
 
                         <div className="chosen-products-container">
                             <div className="chosen-products-wrapper">

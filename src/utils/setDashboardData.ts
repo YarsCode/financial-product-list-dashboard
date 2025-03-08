@@ -1,17 +1,16 @@
 import { DataObj, ProductType } from "../types";
 import { getFormattedDate } from "./getFormattedDate";
 
-// export const setDashboardData = (customerName: string, customerPhone: string, products: ProductType[], step1Total: number, step2Total: number, totalSum: number) => {
-export const setDashboardData = (customerName: string, products: ProductType[], step1Total: number, step2Total: number, totalSum: number) => {
+export const setDashboardData = (customerName: string, customerPhone: string, products: ProductType[], step1Total: number, step2Total: number, totalSum: number) => {
     const dataObj: DataObj = {customerName: "", currentDate: Date(), customerPhone: ""};
         
         if (customerName) {
             dataObj.customerName = customerName;
         }
         
-        // if (customerPhone) {
-        //     dataObj.customerPhone = customerPhone;
-        // }
+        if (customerPhone) {
+            dataObj.customerPhone = customerPhone;
+        }
         
         dataObj.currentDate = getFormattedDate();
         

@@ -31,9 +31,8 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
 
     const exportToDocx = () => {
         return new Promise<Blob>((resolve, reject) => {
-            // loadFile(`${import.meta.env.BASE_URL}planningTemplate.docx`, function (error, content) {
-            const docxUrl = import.meta.env.VITE_DOCX_PATH || 'planningTemplate.docx';
-            console.log("DOCX path:", import.meta.env.VITE_DOCX_PATH);
+            // const docxUrl = import.meta.env.VITE_DOCX_PATH || 'planningTemplate.docx'; // for prod in WP
+            const docxUrl = 'planningTemplate.docx';
             
             loadFile(docxUrl, function (error, content) {
                 if (error) {

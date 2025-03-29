@@ -24,6 +24,7 @@ main.product-lists-main {
     h2 {
         display: flex;
         justify-content: center;
+        align-items: center;
         color: white;
         font-size: 22px;
         font-weight: bold;
@@ -41,9 +42,9 @@ main.product-lists-main {
         background: none;
         color: white;
         margin-right: 4px;
-        font-size: 22px;
+        font-size: 22px !important;
         min-width: 114px;
-        font-weight: bold;
+        font-weight: bold !important;
         padding-bottom: 4px;
 
         &:focus {
@@ -111,13 +112,15 @@ input#customer-phone {
     left: 0;
     width: 28px;
     height: 28px;
+    padding: 6px;
     background: #28df99;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
     transition: box-shadow 0.1s ease;
 }
 
 .reset-board-btn-wrapper:hover {
+    background: #28df99 !important;
     box-shadow: 0 0 4px 4px #ffffff3c;
     transition: box-shadow 0.1s ease;
 }

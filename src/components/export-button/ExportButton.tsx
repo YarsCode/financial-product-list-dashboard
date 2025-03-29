@@ -32,7 +32,8 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
     const exportToDocx = () => {
         return new Promise<Blob>((resolve, reject) => {
             // loadFile(`${import.meta.env.BASE_URL}planningTemplate.docx`, function (error, content) {
-            loadFile('planningTemplate.docx', function (error, content) {
+            const docxUrl = new URL('planningTemplate.docx', window.location.href).toString();
+            loadFile(docxUrl, function (error, content) {
                 if (error) {
                     reject(error);
                     return;

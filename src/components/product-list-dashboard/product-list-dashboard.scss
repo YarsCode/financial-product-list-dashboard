@@ -42,7 +42,8 @@ main.product-lists-main {
         background: none;
         color: white;
         margin-right: 4px;
-        font-size: 22px !important;
+        // font-size: 22px !important; // for local testing
+        font-size: 1.1rem !important;
         min-width: 114px;
         font-weight: bold !important;
         padding-bottom: 4px;
@@ -114,12 +115,14 @@ input#customer-phone {
     height: 28px;
     padding: 6px;
     background: #28df99;
+    border-radius: 0 !important;
     border-top-left-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
     transition: box-shadow 0.1s ease;
 }
 
-.reset-board-btn-wrapper:hover {
+.reset-board-btn-wrapper:hover,
+.reset-board-btn-wrapper:focus {
     background: #28df99 !important;
     box-shadow: 0 0 4px 4px #ffffff3c;
     transition: box-shadow 0.1s ease;

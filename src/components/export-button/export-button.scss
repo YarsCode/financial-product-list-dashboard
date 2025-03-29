@@ -13,7 +13,8 @@
     transition: box-shadow 0.1s ease;
 }
 
-.export-button:hover {
+.export-button:hover,
+.export-button:focus {
     background: #28df99 !important;
     box-shadow: 0 0 4px 4px #ffffff3c;
     transition: box-shadow 0.1s ease;

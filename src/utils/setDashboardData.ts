@@ -30,6 +30,6 @@ export const setDashboardData = (customerName: string, customerPhone: string, pr
             dataObj.totalSum = totalSum;
         }
         
-        console.log('dataObj:', dataObj)
+        // console.log('dataObj:', dataObj)
         return dataObj;
 };

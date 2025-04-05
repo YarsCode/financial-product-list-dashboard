@@ -10,6 +10,9 @@ const chosenProductsContainer = [
     {
         id: "chosenProductsContainer_step2",
     },
+    {
+        id: "chosenProductsContainer_step3",
+    },
 ];
 
 export default { allProductsContainer, chosenProductsContainer };

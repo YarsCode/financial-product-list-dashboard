@@ -25,6 +25,7 @@ main.product-lists-main {
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 8px;
         color: white;
         font-size: 22px;
         font-weight: bold;
@@ -43,37 +44,52 @@ main.product-lists-main {
         color: white;
         margin-right: 4px;
         // font-size: 22px !important; // for local testing
-        font-size: 1.1rem !important;
-        min-width: 114px;
-        font-weight: bold !important;
-        padding-bottom: 4px;
+        border-radius: 4px;
+        font-size: 20px !important;
+        min-width: 150px;
+        // padding-bottom: 4px;
+
+        &::placeholder {
+            text-align: center;
+        }
 
         &:focus {
             background: #dcdcdc;
             color: black;
         }
     }
+
+    input#customer-phone {
+        direction: rtl;
+        border: none;
+        border-radius: 4px;
+        // box-shadow: 0 4px 2px -1px rgba(40, 223, 153, 0.188);
+        outline: none;
+        margin: auto;
+        // padding: 6px;
+        font-size: 20px;
+        color: white;
+        max-width: 150px;
+        background: none;
+        text-align: center;
+        
+        &:focus {
+            background: #dcdcdc;
+            color: black;
+        }
+    }
+
+    .phone-separator {
+        width: 1px;
+        height: 80%;
+        background: #28df99;
+        box-shadow: 0 0px 2px 2px rgba(40, 223, 153, .188);
+    }
 }
 
-input#customer-phone {
-    direction: rtl;
-    border: none;
-    border: 1px solid #28df99;
-    border-radius: 6px;
-    // box-shadow: 0 4px 2px -1px rgba(40, 223, 153, 0.188);
-    outline: none;
-    margin: auto;
-    padding: 6px;
-    font-size: 20px;
-    color: white;
-    max-width: 150px;
-    background: none;
-    text-align: center;
-    
-    &:focus {
-        background: #dcdcdc;
-        color: black;
-    }
+ul.product-list-container.chosen-products-container.monthly-payment-col {
+    border-right: 1px dashed #28df99;
+    border-radius: 0;
 }
 
 .chosen-products-container {
@@ -92,17 +108,22 @@ input#customer-phone {
     justify-content: center;
     align-items: center;
     // background: linear-gradient(345deg,#2adf9a,#2de1a2 21%,#36e2a9 30%,#3fe4b2 39%,#48e5b8 46%,#51e6c1 54%,#5ae7c6 61%,#64e8cb 69%,#6de9d2 79%,#76ead6);
-    border-top: 1px solid #28df99;
+    border: 1px solid #28df99;
+    border-bottom: none;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
     box-shadow: 0 -4px 2px -1px rgba(40, 223, 153, .188);
     // border-radius: 4px;
-    width: 50%;
+    width: 30%;
     min-height: 36px;
+    margin-left: 28%;
     padding: 12px 48px;
 
     p {
         color: #fff;
         font-size: 18px;
         font-weight: bold;
+        white-space: nowrap;
     }
 }
 

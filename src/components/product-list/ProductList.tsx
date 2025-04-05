@@ -3,6 +3,7 @@ import { ContainerType, ProductType } from "../../types";
 import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useMemo, useState } from "react";
 import Product from "../product/Product.tsx";
+import PriceRangeIndicator from "../price-range-indicator/PriceRangeIndicator.tsx";
 // import AddNewSectionButton from "../add-new-section-button/AddNewSectionButton.tsx";
 import { addCommasToNumber } from "../../utils/numberManipulations.ts";
 
@@ -11,6 +12,7 @@ interface Props {
     products: ProductType[];
     setStep1Total: React.Dispatch<React.SetStateAction<number>>;
     setStep2Total: React.Dispatch<React.SetStateAction<number>>;
+    setStep3Total: React.Dispatch<React.SetStateAction<number>>;
     className?: string;
 }
 
@@ -19,17 +21,22 @@ function ProductList({
     products,
     setStep1Total,
     setStep2Total,
+    setStep3Total,
     className,
 }: Props) {
     const [productsSum, setProductsSum] = useState(0);
+    
     const productsIds = useMemo(() => {
+        return products.map((product) => product.id);
+    }, [products]);
+    
+    // Calculate products sum whenever products change
+    useEffect(() => {
         const productsArr = [...products];
         const totalPrice = productsArr.reduce((accumulator, currentValue) => {
-            return accumulator + parseFloat(currentValue.price + ""); // The reduce func adds up the numbers as strings for some reason, so I wrapped the price in parseFloat and also because TS yells at me I had to turn it into a string
+            return accumulator + parseFloat(currentValue.price + "");
         }, 0);
-        // console.log(totalPrice);
         setProductsSum(totalPrice);
-        return products.map((product) => product.id);
     }, [products]);
 
     useEffect(() => {
@@ -40,7 +47,7 @@ function ProductList({
         if (container.id === "chosenProductsContainer_step2") {
             setStep2Total(productsSum);
         }
-    }, [productsSum]);
+    }, [productsSum, container.id, setStep1Total, setStep2Total]);
 
     const { setNodeRef, transform, transition, isDragging } = useSortable({
         id: container.id,
@@ -60,8 +67,13 @@ function ProductList({
         return <li className="product--drag-overlay" ref={setNodeRef} style={style}></li>;
     }
 
+    // Handle the slider value change
+    const handleSliderChange = (value: number) => {
+        setStep3Total(value);
+    };
+
     return (
-        <ul ref={setNodeRef} style={style} className={className}>
+        <ul ref={setNodeRef} style={style} className={`${className}${container.id === "chosenProductsContainer_step3" ? " monthly-payment-col" : ""}`}>
             {container.id === "allProductsContainer" ? (
                 <SortableContext items={productsIds}>
                     {products.map((product) => (
@@ -78,11 +90,6 @@ function ProductList({
                             ))}
                         </SortableContext>
                     </div>
-                    {/* <SortableContext items={productsIds}>
-                        {products.map((product) => (
-                            <Product key={product.id} product={product} className="product" />
-                        ))}
-                    </SortableContext> */}
                     <div className="products-step-sum">
                         <p>עלות כוללת (שלב 1): ₪{addCommasToNumber(productsSum)}</p>
                     </div>
@@ -97,15 +104,12 @@ function ProductList({
                             ))}
                         </SortableContext>
                     </div>
-                    {/* <SortableContext items={productsIds}>
-                        {products.map((product) => (
-                            <Product key={product.id} product={product} className="product" />
-                        ))}
-                    </SortableContext> */}
                     <div className="products-step-sum">
                         <p>עלות כוללת (שלב 2): ₪{addCommasToNumber(productsSum)}</p>
                     </div>
                 </>
+            ) : container.id === "chosenProductsContainer_step3" ? (
+                <PriceRangeIndicator initialValue={94} onChange={handleSliderChange} />
             ) : null}
         </ul>
     );

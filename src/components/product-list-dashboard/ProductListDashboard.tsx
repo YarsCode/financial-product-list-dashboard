@@ -41,6 +41,7 @@ function ProductListDashboard() {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [step1Total, setStep1Total] = useState(0);
     const [step2Total, setStep2Total] = useState(0);
+    const [step3Total, setStep3Total] = useState(0);
     const [totalSum, setTotalSum] = useState(step1Total + step2Total);
     const [dataObj, setDataObj] = useState<DataObj>({
         customerName: '',
@@ -93,6 +94,8 @@ function ProductListDashboard() {
     }, [hasClickedResetBtn]);
 
     useEffect(() => {
+        // Only include step1 and step2 in the total sum (one-time fees)
+        // step3 (monthly fees) is deliberately excluded from the total
         setTotalSum(step1Total + step2Total);
     }, [step1Total, step2Total]);
 
@@ -101,9 +104,9 @@ function ProductListDashboard() {
     }, [customerName]);
 
     useMemo(() => {
-        setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, totalSum));
+        setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, step3Total, totalSum));
         
-    }, [customerName, customerPhone, products, step1Total, step2Total, totalSum]);
+    }, [customerName, customerPhone, products, step1Total, step2Total, step3Total, totalSum]);
 
     //! console.log('products', products); // Check why this renders twice
 
@@ -171,6 +174,7 @@ function ProductListDashboard() {
                 products={products.filter((product) => product.container === container.id)}
                 setStep1Total={setStep1Total}
                 setStep2Total={setStep2Total}
+                setStep3Total={setStep3Total}
                 className={`product-list-container${
                     container.id !== "allProductsContainer" ? " chosen-products-container" : ""
                 }`}
@@ -283,8 +287,8 @@ function ProductListDashboard() {
                                 placeholder="שם הלקוח"
                                 style={{ width: inputWidth }}
                             />
-                        </h2>
 
+                        <span className="phone-separator"></span>
                         <label htmlFor="phone"></label>
                         <input
                             type="tel"
@@ -295,6 +299,8 @@ function ProductListDashboard() {
                             onKeyDown={handlePhoneInputKeyDown}
                             required
                         />
+                        </h2>
+
 
                         <div className="chosen-products-container">
                             <div className="chosen-products-wrapper">
@@ -318,6 +324,7 @@ function ProductListDashboard() {
                                 container={activeContainer}
                                 setStep1Total={setStep1Total}
                                 setStep2Total={setStep2Total}
+                                setStep3Total={setStep3Total}
                                 products={products.filter((product) => product.container === activeContainer.id)}
                             />
                         )}

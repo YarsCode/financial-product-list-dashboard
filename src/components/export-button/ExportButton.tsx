@@ -22,6 +22,7 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
         step1Total,
         planningStep2,
         step2Total,
+        step3Total,
         totalSum,
       } = dataObj;
 
@@ -31,8 +32,8 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
 
     const exportToDocx = () => {
         return new Promise<Blob>((resolve, reject) => {
-            const docxUrl = import.meta.env.VITE_DOCX_PATH || 'planningTemplate.docx'; // for prod in WP
-            // const docxUrl = 'planningTemplate.docx'; // for prod in GitHub Pages
+            // const docxUrl = import.meta.env.VITE_DOCX_PATH || 'planningTemplate.docx'; // for prod in WP
+            const docxUrl = 'planningTemplate.docx'; // for prod in GitHub Pages
             
             loadFile(docxUrl, function (error, content) {
                 if (error) {
@@ -61,7 +62,8 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
                     step1Total: addCommasToNumber(step1Total ?? 0),
                     planningStep2: formattedPlanningStep2,
                     step2Total: addCommasToNumber(step2Total ?? 0),
-                    totalSum: addCommasToNumber(totalSum ?? 0),
+                    step3Total: addCommasToNumber(step3Total ?? 0),
+                    totalSum: addCommasToNumber(totalSum ?? 0)
                 });
                 const out = doc.getZip().generate({
                     type: "blob",

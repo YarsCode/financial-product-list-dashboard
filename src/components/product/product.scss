@@ -82,6 +82,16 @@ li.product--drag-overlay {
     box-shadow: 0 0 10px 2px #fff;
 }
 
+@media screen and (max-width: 1130px) {
+    li.product .product__name {
+        font-size: 15px;
+    }
+
+    li.product .product__desc {
+        font-size: 14px;
+    }
+}
+
 @media screen and (max-width: 550px) {
     .product__name {
         font-size: 12px;

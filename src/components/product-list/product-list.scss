@@ -75,7 +75,7 @@ ul.product-list-container::-webkit-scrollbar-thumb,
     }
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1330px) {
     ul.product-list-container,
     ul.product-list-container .chosen-products-inner-wrapper {
         width: 278px;
@@ -86,7 +86,7 @@ ul.product-list-container::-webkit-scrollbar-thumb,
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1130px) {
     ul.product-list-container,
     ul.product-list-container .chosen-products-inner-wrapper {
         max-width: 220px;
@@ -95,6 +95,18 @@ ul.product-list-container::-webkit-scrollbar-thumb,
     
     ul.product-list-container.monthly-payment-col {
         width: 220px;
+    }
+
+    ul.product-list-container.chosen-products-container h3 {
+        font-size: 1rem;
+    }
+
+    .products-step-sum p {
+        font-size: 16px;
+    }
+
+    .products-total-sum p {
+        font-size: 16px;
     }
 }
 

@@ -69,7 +69,7 @@
     .section-titles {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-around;
         margin-left: 15px;
         text-align: right;
         padding: 15px 0;
@@ -94,7 +94,7 @@
         padding: 8px 15px;
         border-radius: 5px;
         font-weight: 600;
-        width: 80%;
+        width: 100%;
         
         p {
             margin: 0;

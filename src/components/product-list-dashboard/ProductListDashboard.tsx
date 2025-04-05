@@ -240,6 +240,11 @@ function ProductListDashboard() {
                 const overIndex = products.findIndex((product) => product.id === overId);
 
                 if (products[activeIndex].container != products[overIndex].container) {
+                    // Prevent dropping into step3 container
+                    if (products[overIndex].container === "chosenProductsContainer_step3") {
+                        return [...products];
+                    }
+                    
                     products[activeIndex].container = products[overIndex].container;
                     return arrayMove(products, activeIndex, overIndex - 1);
                 }
@@ -254,12 +259,14 @@ function ProductListDashboard() {
             setProducts((products) => {
                 const activeIndex = products.findIndex((product) => product.id === activeId);
 
-                // console.log("overId:", overId);
-                // console.log("products[activeIndex].container:", products[activeIndex].container);
+                // Prevent dropping into step3 container
+                if (overId === "chosenProductsContainer_step3") {
+                    return [...products];
+                }
+                
                 if (typeof overId === "string") {
                     products[activeIndex].container = overId;
                 }
-                // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
                 return arrayMove(products, activeIndex, activeIndex);
             });
         }

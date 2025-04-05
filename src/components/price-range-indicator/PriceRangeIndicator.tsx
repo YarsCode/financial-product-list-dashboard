@@ -20,9 +20,9 @@ const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue 
         if (val >= 94 && val <= 168) {
             return "ליווי בסיסי";
         } else if (val >= 169 && val <= 325) {
-            return "ליווי חצי שנתי";
-        } else if (val >= 326 && val <= 560) {
             return "ליווי שנתי";
+        } else if (val >= 326 && val <= 560) {
+            return "ליווי חצי שנתי";
         } else if (val >= 561 && val <= 658) {
             return "ליווי רבעוני";
         }
@@ -98,7 +98,7 @@ const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue 
 
     return (
         <>
-            <h3 className="title">ליווי מתמשך</h3>
+            <h3 className="title">שלב 3 - ליווי מתמשך</h3>
             <div className="vertical-slider-container">
                 <div className="slider-content">
                     <div className="slider-track-container">
@@ -120,14 +120,14 @@ const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue 
 
                     <div className="section-titles">
                         <div className={`section-title ${activeSection === "ליווי רבעוני" ? "active" : ""}`}>ליווי רבעוני</div>
-                        <div className={`section-title ${activeSection === "ליווי שנתי" ? "active" : ""}`}>ליווי שנתי</div>
                         <div className={`section-title ${activeSection === "ליווי חצי שנתי" ? "active" : ""}`}>ליווי חצי שנתי</div>
+                        <div className={`section-title ${activeSection === "ליווי שנתי" ? "active" : ""}`}>ליווי שנתי</div>
                         <div className={`section-title ${activeSection === "ליווי בסיסי" ? "active" : ""}`}>ליווי בסיסי</div>
                     </div>
                 </div>
 
                 <div className="monthly-cost">
-                    <p>עלות הליווי: ₪{value}</p>
+                    <p>עלות הליווי: ₪{value} בחודש</p>
                 </div>
             </div>
         </>

@@ -4,14 +4,15 @@ import "./price-range-indicator.scss";
 interface PriceRangeIndicatorProps {
     initialValue?: number;
     onChange?: (value: number) => void;
+    setActiveSection?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue = 94, onChange }) => {
+const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue = 94, onChange, setActiveSection }) => {
     const MIN_VALUE = 94;
     const MAX_VALUE = 658;
     const [value, setValue] = useState<number>(Math.min(Math.max(initialValue, MIN_VALUE), MAX_VALUE));
     const [isDragging, setIsDragging] = useState(false);
-    const [activeSection, setActiveSection] = useState("");
+    const [activeSection, setActiveSectionState] = useState("");
     const sliderRef = useRef<HTMLDivElement>(null);
     const knobRef = useRef<HTMLDivElement>(null);
 
@@ -31,14 +32,20 @@ const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue 
 
     // Update the active section when value changes
     useEffect(() => {
-        setActiveSection(getActiveSection(value));
-
+        const newActiveSection = getActiveSection(value);
+        setActiveSectionState(newActiveSection);
+        
+        // Update parent component's state if the prop is provided
+        if (setActiveSection) {
+            setActiveSection(newActiveSection);
+        }
+        
         // Call the onChange callback if provided
         if (onChange) {
             onChange(value);
         }
 
-    }, [value, onChange]);
+    }, [value, onChange, setActiveSection]);
 
     // Handle mouse and touch events for dragging
     useEffect(() => {

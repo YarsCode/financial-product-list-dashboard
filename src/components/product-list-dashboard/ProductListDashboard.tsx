@@ -69,6 +69,8 @@ function ProductListDashboard() {
 
     const [activeProduct, setActiveProduct] = useState<ProductType | null>(null);
 
+    const [activeSection, setActiveSection] = useState("");
+
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
@@ -104,9 +106,8 @@ function ProductListDashboard() {
     }, [customerName]);
 
     useMemo(() => {
-        setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, step3Total, totalSum));
-        
-    }, [customerName, customerPhone, products, step1Total, step2Total, step3Total, totalSum]);
+        setDataObj(setDashboardData(customerName, customerPhone, products, step1Total, step2Total, step3Total, totalSum, activeSection));
+    }, [customerName, customerPhone, products, step1Total, step2Total, step3Total, totalSum, activeSection]);
 
     //! console.log('products', products); // Check why this renders twice
 
@@ -175,6 +176,7 @@ function ProductListDashboard() {
                 setStep1Total={setStep1Total}
                 setStep2Total={setStep2Total}
                 setStep3Total={setStep3Total}
+                setActiveSection={setActiveSection}
                 className={`product-list-container${
                     container.id !== "allProductsContainer" ? " chosen-products-container" : ""
                 }`}

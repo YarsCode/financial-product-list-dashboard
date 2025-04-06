@@ -13,6 +13,7 @@ interface Props {
     setStep1Total: React.Dispatch<React.SetStateAction<number>>;
     setStep2Total: React.Dispatch<React.SetStateAction<number>>;
     setStep3Total: React.Dispatch<React.SetStateAction<number>>;
+    setActiveSection?: React.Dispatch<React.SetStateAction<string>>;
     className?: string;
 }
 
@@ -22,6 +23,7 @@ function ProductList({
     setStep1Total,
     setStep2Total,
     setStep3Total,
+    setActiveSection,
     className,
 }: Props) {
     const [productsSum, setProductsSum] = useState(0);
@@ -109,7 +111,7 @@ function ProductList({
                     </div>
                 </>
             ) : container.id === "chosenProductsContainer_step3" ? (
-                <PriceRangeIndicator initialValue={94} onChange={handleSliderChange} />
+                <PriceRangeIndicator initialValue={94} onChange={handleSliderChange} setActiveSection={setActiveSection} />
             ) : null}
         </ul>
     );

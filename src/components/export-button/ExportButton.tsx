@@ -26,14 +26,18 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
         totalSum,
       } = dataObj;
 
+    // Get the active section from the product-list component
+    const activeSection = dataObj.activeSection || "";
+
     const loadFile = (url: string, callback: (error: Error | null, content: string) => void) => {
         PizZipUtils.getBinaryContent(url, callback);
     };
 
     const exportToDocx = () => {
         return new Promise<Blob>((resolve, reject) => {
-            // const docxUrl = import.meta.env.VITE_DOCX_PATH || 'planningTemplate.docx'; // for prod in WP
-            const docxUrl = 'planningTemplate.docx'; // for prod in GitHub Pages
+            // Check if the current URL is from GitHub Pages
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const docxUrl = isGitHubPages ? 'planningTemplate.docx' : import.meta.env.VITE_DOCX_PATH;
             
             loadFile(docxUrl, function (error, content) {
                 if (error) {
@@ -62,6 +66,7 @@ const ExportButton: React.FC<Props> = ({dataObj}) => {
                     step1Total: addCommasToNumber(step1Total ?? 0),
                     planningStep2: formattedPlanningStep2,
                     step2Total: addCommasToNumber(step2Total ?? 0),
+                    planningStep3: activeSection,
                     step3Total: addCommasToNumber(step3Total ?? 0),
                     totalSum: addCommasToNumber(totalSum ?? 0)
                 });

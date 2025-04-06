@@ -30,6 +30,17 @@ const PriceRangeIndicator: React.FC<PriceRangeIndicatorProps> = ({ initialValue 
         return "";
     };
 
+    // Set initial active section on component mount
+    useEffect(() => {
+        const initialActiveSection = getActiveSection(value);
+        setActiveSectionState(initialActiveSection);
+        
+        // Update parent component's state if the prop is provided
+        if (setActiveSection) {
+            setActiveSection(initialActiveSection);
+        }
+    }, []);
+
     // Update the active section when value changes
     useEffect(() => {
         const newActiveSection = getActiveSection(value);
